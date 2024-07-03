@@ -1,7 +1,8 @@
 import secrets
 import string
-from mongoConnection import connect_to_mongodb
 from bcrypt import hashpw, gensalt
+
+from backend.mongoConnection import connect_to_mongodb
 
 
 # Generate a random token

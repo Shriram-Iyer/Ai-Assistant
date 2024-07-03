@@ -1,5 +1,7 @@
-from mongoConnection import connect_to_mongodb
+
 from bcrypt import hashpw, gensalt
+
+from backend.mongoConnection import connect_to_mongodb
 
 
 # Sign up function

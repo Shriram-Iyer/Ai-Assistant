@@ -1,10 +1,14 @@
+import json
+
 from flask import Flask, request
+from flask_cors import CORS
 
 from login.forgotPassword import forgot_password, reset_password
 from login.signup import signup
 from login.verifier import authenticate_user
 
 app = Flask(__name__)
+CORS(app, origins="http://localhost:3000")
 
 
 @app.route("/api/health", methods=["GET"])
@@ -37,10 +41,12 @@ def reset_password_handler():
 
 @app.route("/api/logIn", methods=["POST"])
 def login_handler():
+    print(request)
+    print(request.is_json)
     payload = request.json
-    print("login",payload)
-    username = payload.get('username', '')
-    password = payload.get('password', '')
+    print("login", type(payload))
+    username = payload.get('username')
+    password = payload.get('password')
     if username != '' and password != '':
         response_message = authenticate_user(username, password)
         response = response_message['message']
@@ -54,7 +60,7 @@ def login_handler():
 @app.route("/api/signUp", methods=["POST"])
 def signUp_handler():
     payload = request.json
-    print("signup",payload)
+    print("signup", payload)
     username = payload.get('username', '')
     password = payload.get('password', '')
     email = payload.get('email', '')
@@ -69,4 +75,4 @@ def signUp_handler():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8080)
+    app.run(debug=True, port=8081)
